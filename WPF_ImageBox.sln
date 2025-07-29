@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageBoxTestApp", "WpfApp1\ImageBoxTestApp.csproj", "{7230865C-542E-410D-B0DE-5003902F514D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoomAndPan", "ZoomAndPanControl\ZoomAndPan.csproj", "{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoLibV2.WPF_CustomControl", "MemoLibV2.WPF_CustomControl\MemoLibV2.WPF_CustomControl.csproj", "{14B26648-4C95-42C5-A344-82B2C651E7E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7230865C-542E-410D-B0DE-5003902F514D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7230865C-542E-410D-B0DE-5003902F514D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7230865C-542E-410D-B0DE-5003902F514D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7230865C-542E-410D-B0DE-5003902F514D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B26648-4C95-42C5-A344-82B2C651E7E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B26648-4C95-42C5-A344-82B2C651E7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B26648-4C95-42C5-A344-82B2C651E7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B26648-4C95-42C5-A344-82B2C651E7E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6B0855C-DD5B-4926-8F86-F539E8083E33}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,610 @@
+﻿<UserControl x:Class="MemoLibV2.WPF_CustomControl.ImageBox.mmImageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MemoLibV2.WPF_CustomControl.ImageBox"
+             xmlns:zp="clr-namespace:ZoomAndPan;assembly=ZoomAndPan"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DrawingBrush x:Key="GridTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- First square (top-left) - Light color -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,10,10"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F5F5F5"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Second square (top-right) - Dark color -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="10,0,10,10"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#EEEEEE"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Third square (bottom-left) - Dark color -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,10,10,10"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#EEEEEE"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Fourth square (bottom-right) - Light color -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="10,10,10,10"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F5F5F5"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Extra Small Checkerboard Pattern (8x8 squares) -->
+            <DrawingBrush x:Key="GridTileBrushExtraSmall" 
+                  TileMode="Tile" 
+                  Viewport="0,0,16,16" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Light squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,8,8"/>
+                                    <RectangleGeometry Rect="8,8,8,8"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F8F8F8"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Dark squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="8,0,8,8"/>
+                                    <RectangleGeometry Rect="0,8,8,8"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#ECECEC"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Colored Checkerboard Pattern - Blue Theme -->
+            <DrawingBrush x:Key="GridTileBrushBlue" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Light blue squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,10,10"/>
+                                    <RectangleGeometry Rect="10,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F0F4FF"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Darker blue squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="10,0,10,10"/>
+                                    <RectangleGeometry Rect="0,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#E8F0FF"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Colored Checkerboard Pattern - Green Theme -->
+            <DrawingBrush x:Key="GridTileBrushGreen" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Light green squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,10,10"/>
+                                    <RectangleGeometry Rect="10,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F0FFF0"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Darker green squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="10,0,10,10"/>
+                                    <RectangleGeometry Rect="0,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#E8F8E8"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Dark/Black Theme Checkerboard Patterns -->
+
+            <!-- Black Checkerboard Pattern - Standard -->
+            <DrawingBrush x:Key="GridTileBrushBlack" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Lighter black squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,10,10"/>
+                                    <RectangleGeometry Rect="10,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#2A2A2A"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Darker black squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="10,0,10,10"/>
+                                    <RectangleGeometry Rect="0,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#1A1A1A"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Black Checkerboard Pattern - Extra Small -->
+            <DrawingBrush x:Key="GridTileBrushBlackSmall" 
+                  TileMode="Tile" 
+                  Viewport="0,0,16,16" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Lighter black squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,8,8"/>
+                                    <RectangleGeometry Rect="8,8,8,8"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#333333"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Darker black squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="8,0,8,8"/>
+                                    <RectangleGeometry Rect="0,8,8,8"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#1F1F1F"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Dark Gray Checkerboard Pattern - Softer Alternative -->
+            <DrawingBrush x:Key="GridTileBrushDarkGray" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Lighter gray squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,10,10"/>
+                                    <RectangleGeometry Rect="10,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#2D2D2D"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Darker gray squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="10,0,10,10"/>
+                                    <RectangleGeometry Rect="0,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#353535"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Black with Blue Accent Checkerboard -->
+            <DrawingBrush x:Key="GridTileBrushBlackBlue" 
+                  TileMode="Tile" 
+                  Viewport="0,0,25,25" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Dark blue-tinted squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="0,0,10,10"/>
+                                    <RectangleGeometry Rect="10,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#1A1A2E"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+
+                        <!-- Pure black squares -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="10,0,10,10"/>
+                                    <RectangleGeometry Rect="0,10,10,10"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#0F0F0F"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Diamond Tile Pattern -->
+            <DrawingBrush x:Key="DiamondTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,40,40" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,40,40"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F5F5F5"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Diamond shape -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="20,5">
+                                        <LineSegment Point="35,20"/>
+                                        <LineSegment Point="20,35"/>
+                                        <LineSegment Point="5,20"/>
+                                        <LineSegment Point="20,5"/>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#EEEEEE"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Hexagon Tile Pattern -->
+            <DrawingBrush x:Key="HexagonTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,60,52" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,60,52"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#FAFAFA"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Hexagon -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="30,6">
+                                        <LineSegment Point="45,17"/>
+                                        <LineSegment Point="45,35"/>
+                                        <LineSegment Point="30,46"/>
+                                        <LineSegment Point="15,35"/>
+                                        <LineSegment Point="15,17"/>
+                                        <LineSegment Point="30,6"/>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#E8E8E8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Circular Dots Pattern -->
+            <DrawingBrush x:Key="DotTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,30,30" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,30,30"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="White"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Dot -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="15,15" RadiusX="3" RadiusY="3"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#E5E5E5"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Small Dots Pattern -->
+            <DrawingBrush x:Key="DotTileBrushSmall" 
+                  TileMode="Tile" 
+                  Viewport="0,0,15,15" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,15,15"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="White"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Dot -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="7.5,7.5" RadiusX="1.5" RadiusY="1.5"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#E8E8E8"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Cross Hatch Pattern -->
+            <DrawingBrush x:Key="CrossHatchTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,20,20" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,20,20"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#FCFCFC"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Diagonal lines -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <!-- Forward diagonal -->
+                                    <LineGeometry StartPoint="0,0" EndPoint="20,20"/>
+                                    <!-- Backward diagonal -->
+                                    <LineGeometry StartPoint="20,0" EndPoint="0,20"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Brush="#F0F0F0" Thickness="0.5"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+
+            <!-- Brick Pattern -->
+            <DrawingBrush x:Key="BrickTileBrush" 
+                  TileMode="Tile" 
+                  Viewport="0,0,60,30" 
+                  ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <!-- Background -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,60,30"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#F7F7F7"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- First row of bricks -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="2,2,26,11"/>
+                                    <RectangleGeometry Rect="32,2,26,11"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#EEEEEE"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                        <!-- Second row of bricks (offset) -->
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <RectangleGeometry Rect="-13,17,26,11"/>
+                                    <RectangleGeometry Rect="17,17,26,11"/>
+                                    <RectangleGeometry Rect="47,17,26,11"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#EEEEEE"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+            <DockPanel x:Name="PanelViewName" DockPanel.Dock="Top" Height="35" Grid.Row="0" Background="#3B3E41" 
+                       Visibility="{Binding ControlPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl} }">
+                <Label x:Name="lbViewName" DockPanel.Dock="Left"  
+                       Content="{Binding ViewName, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontWeight="Bold" Foreground="White" Margin="5,5,0,0"></Label>
+                <DockPanel x:Name="pnControlFunction" DockPanel.Dock="Right">
+                    
+                </DockPanel>
+            </DockPanel>
+
+            <ScrollViewer x:Name="scroller"
+                CanContentScroll="True"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                HorizontalScrollBarVisibility="Hidden"
+                VerticalScrollBarVisibility="Hidden"
+                BorderBrush="DarkBlue"
+                BorderThickness="3"
+               >
+
+                <!--
+        This is the control that handles zooming and panning.
+    -->
+                <!--Background="{StaticResource GridTileBrushBlackBlue}"-->
+              
+                <zp:ZoomAndPanControl Name="ZoomAndPanControl"
+                                MinimumZoomType="FitScreen"
+                                UseAnimations="{Binding ElementName=AnimationsCheckBox, Path=IsChecked}"
+                                ZoomAndPanInitialPosition="FitScreen">
+
+                    <Canvas x:Name="actualContent"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="{Binding ActualWidth, ElementName=mainImage}"
+                    Height="{Binding ActualHeight, ElementName=mainImage}">
+                        <Canvas.ContextMenu>
+                            <ContextMenu Placement="Mouse" HorizontalOffset="208">
+
+                                <MenuItem x:Name="themeMenu" Header="Themes"></MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Fit To Window" Click="FitImageToWindow_CLick"></MenuItem>
+                                <MenuItem Header="Fill To Window" Click="FillImageToWindow_CLick" IsEnabled="False"></MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Clear View" Click="ClearView_Click"></MenuItem>
+                                <MenuItem Header="Clear Graphics" Click="ClearGraphics_Click" IsEnabled="False"></MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Save Image" Click="SaveImage_Click"></MenuItem>
+                                <MenuItem Header="Save Graphics Image" Click="SaveGraphicsImage_Click"></MenuItem>
+
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
+
+                        <Image Name="mainImage" 
+                       Stretch="None"
+                       Canvas.Left="0" 
+                       Canvas.Top="0"
+                        RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
+                                    <TranslateTransform x:Name="translateTransform" X="0" Y="0"/>
+                                    <RotateTransform x:Name="rotateTransform" Angle="0"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+
+                    </Canvas>
+
+                </zp:ZoomAndPanControl>
+            </ScrollViewer>
+        </DockPanel>
+        
+     
+    </Grid>
+</UserControl>
